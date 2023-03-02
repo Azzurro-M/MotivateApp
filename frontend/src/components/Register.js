@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Register.css";
-import registerImage from "../image/register.jpg";
+import "./css/Register.css";
+import { Link } from "react-router-dom";
+// import registerImage from "../image/register.jpg";
 
 export const Register = () => {
   const [name, setName] = useState("");
@@ -37,7 +38,7 @@ export const Register = () => {
           {/* <img src={registerImage} alt="skateboarding" /> */}
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form className="register-form" onSubmit={handleSubmit}>
           <label>
             Name:
             <input
@@ -64,6 +65,9 @@ export const Register = () => {
           </label>
           <button type="submit">Register</button>
           <p>{message}</p>
+          <div>
+            <Link to="/login">Already a member? Sign in!</Link>
+          </div>
         </form>
       </div>
     </>

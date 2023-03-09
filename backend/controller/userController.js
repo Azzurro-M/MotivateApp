@@ -9,13 +9,13 @@ const jwt = require("jsonwebtoken");
 // TOKEN SET-UP
 const generateToken = (id, time) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: time,
+    expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-
+  console.log(req.body);
   if (!name || !email || !password) {
     res.status(400);
     throw new Error("Please add all fields");
@@ -36,10 +36,10 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password: hashedPassword,
-    token: generateToken(user._id, process.env.JWT_EXPIRES_IN),
   });
 
   if (user) {
+    console.log("hello");
     res.status(201).json({
       _id: user.id,
       name: user.name,

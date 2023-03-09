@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
+const cors = require("cors");
 
 const {
   errorHandler,
@@ -9,6 +10,7 @@ const colors = require("colors");
 const connectDB = require("./config/db.js");
 
 const app = express();
+app.use(cors());
 
 const PORT = process.env.PORT || 8000;
 

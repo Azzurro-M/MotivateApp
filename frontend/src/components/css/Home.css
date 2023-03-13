@@ -1,8 +1,7 @@
 .home {
   width: 100%;
-  max-width: 400px;
+  max-width: 800px;
   margin: auto;
-  padding: 50px;
   border-radius: 5px;
   align-content: center;
 }
@@ -25,4 +24,48 @@ span {
 
 .start {
   padding: 40px;
+}
+
+.link {
+  background-color: white;
+  color: #f442ca; /* or any other color you prefer */
+  padding: 10px;
+  border: 2px solid #f442ca; /* or any other color you prefer */
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.link:hover {
+  background-color: #f442ca; /* or any other color you prefer */
+  color: white;
+  border-color: #f442ca; /* or any other color you prefer */
+}
+
+.link-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+@media (max-width: 500px) {
+  .home {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    border-radius: 5px;
+    align-content: center;
+  }
+
+  .link-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  }
 }

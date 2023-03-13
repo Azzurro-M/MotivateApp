@@ -3,6 +3,7 @@ import { Register } from "./components/Register";
 import { Home } from "./components/Home";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Footer } from "./components/Footer";
+
 // import { AuthProvider } from "./components/auth/AuthProvider";
 
 function App() {

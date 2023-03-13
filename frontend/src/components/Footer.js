@@ -7,9 +7,9 @@ export function Footer() {
     <div>
       <footer>
         <img className="author-pic" src={profile} alt="author" />
-        <h5 className="author-description">
+        <h6 className="author-description">
           Created by Marianna Azzurro - Full Stack Web Developer.
-        </h5>
+        </h6>
       </footer>
     </div>
   );

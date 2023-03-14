@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./css/Register.css";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 // import registerImage from "../image/register.jpg";
 
 export const Register = () => {
@@ -9,6 +9,7 @@ export const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,6 +21,8 @@ export const Register = () => {
         password,
       });
       setMessage("User registered successfully!");
+      alert("Please Login to confirm your new account!");
+      navigate("/Login");
     } catch (error) {
       setMessage("Error registering user");
       console.error(error);

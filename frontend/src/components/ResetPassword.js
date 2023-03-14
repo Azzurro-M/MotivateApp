@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./css/ResetPassword.css";
 
 export const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [resetToken, setResetToken] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const response = await fetch(
-      "http://localhost:5000/api/user/resetPassword",
+      `http://localhost:5000/api/user/resetPassword${resetToken}`,
       {
         method: "POST",
         headers: {

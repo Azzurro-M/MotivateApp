@@ -32,12 +32,7 @@ function App() {
               <PrivateRoute authenticated={true} component={EmailReset} />
             }
           />
-          <Route
-            path="/ResetPassword"
-            element={
-              <PrivateRoute authenticated={true} component={ResetPassword} />
-            }
-          />
+          <Route path="/resetpassword/:token" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
       <Footer />

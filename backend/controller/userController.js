@@ -16,25 +16,25 @@ const generateToken = (id, time) => {
   });
 };
 
+//SIGNUP
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(req.body);
+
+  //IF FORM NOT COMPLETED
   if (!name || !email || !password) {
     res.status(400);
     throw new Error("Please add all fields");
   }
-
-  // Check if user exists
+  // CHECK IF EMAIL ALREADY EXSISTS
   const userExists = await User.findOne({ email });
 
   if (userExists) {
     res.status(400);
     throw new Error("Email already exists");
   }
+  //IF USER NEEDS TO BE CREATED
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
-
-  // Create user
   const user = await User.create({
     name,
     email,
@@ -54,16 +54,18 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
+//LOGIN
 const loginUser = asyncHandler(async (req, res) => {
+  //LOGIN FORM
   const { email, password } = req.body;
-
-  // Check for user email
+  //FIND USER
   const user = await User.findOne({ email });
-
+  //IF NOT A USER OR EMAIL / PSW NOT MACTH
   if (!user || !(await bcrypt.compare(password, user.password))) {
     res.status(400);
     throw new Error("Invalid credentials");
   }
+  //IF MACTH
   const token = generateToken(user.id);
   user.password = undefined;
   res.status(200).json({ user, token });
@@ -72,30 +74,35 @@ const loginUser = asyncHandler(async (req, res) => {
 const getUser = asyncHandler(async (req, res) => {
   res.status(200).json(req.user);
 });
-
 const logOut = asyncHandler(async (req, res) => {
   const logoutToken = generateToken(id, "1s");
 });
 
+//FORGOT PASSWORD FUNCTOONALITY
+
 const forgotPassword = asyncHandler(async (req, res) => {
+  //EMAIL FIELD TO REQUEST
   const { email } = req.body;
-
+  //FIND USER WITH EMAIL
   const user = await User.findOne({ email });
-
+  //IF EMAIL NOT FOUND
   if (!user) {
     res.status(404);
     throw new Error("User not found");
   }
 
+  //IF USER FOUND
+  //GENERATE RESET PSW TOKEN
   const resetToken = user.getResetPasswordToken();
-
   await user.save();
 
-  const resetUrl = `${req.protocol}://${req.get(
-    "host"
-  )}/api/user/resetpassword/${resetToken}`;
+  // const resetUrl = `${req.protocol}://${req.get(
+  //   "host"
+  // )}/api/user/resetpassword/${resetToken}`;
 
-  const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Please make a PUT request to: \n\n ${resetUrl}`;
+  //RESET LINK PLUS MESSAGE
+  const resetUrl = `http://localhost:3000/resetpassword/${resetToken}`;
+  const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Clic on this link to reset your password: \n\n ${resetUrl}`;
 
   try {
     //   await sendEmail({
@@ -120,7 +127,6 @@ const forgotPassword = asyncHandler(async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
-
     res.status(200).json({ success: true, data: "Email sent" });
   } catch (error) {
     user.resetPasswordToken = undefined;
@@ -138,7 +144,7 @@ const resetPassword = asyncHandler(async (req, res) => {
     .createHash("sha256")
     .update(req.params.resetToken)
     .digest("hex");
-
+  console.log(req.params.resetToken);
   const user = await User.findOne({
     resetPasswordToken,
     resetPasswordExpire: { $gt: Date.now() },
@@ -157,7 +163,6 @@ const resetPassword = asyncHandler(async (req, res) => {
   user.password = hashedPassword;
   user.resetPasswordToken = undefined;
   user.resetPasswordExpire = undefined;
-
   await user.save();
 
   res.status(200).json({ success: true, data: "Password updated" });

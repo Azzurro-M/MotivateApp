@@ -4,6 +4,8 @@ import "./css/ResetPassword.css";
 
 export const EmailReset = () => {
   const [email, setEmail] = useState("");
+  const [resetToken, setResetToken] = "";
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -11,7 +13,7 @@ export const EmailReset = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/user/forgotpassword",
+        `http://localhost:5000/api/user/forgotpassword`,
         {
           method: "POST",
           headers: {
@@ -38,7 +40,7 @@ export const EmailReset = () => {
   return (
     <>
       <form className="login-form" onSubmit={handleSubmit}>
-        <h2> Confirm your Email!</h2>
+        <h2> Request your Reset Password Link!</h2>
         <label>
           Email:
           <input

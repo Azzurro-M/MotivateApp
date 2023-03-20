@@ -24,15 +24,14 @@ export const ResetPassword = () => {
     );
 
     const data = await response.json();
-    console.log(data);
+
     // Check if password reset was successful
     if (response.ok && data.success) {
       // Redirect to the login page
       alert("Password reset successful. Please login with your new password.");
-      navigate("/");
+      navigate("/Login");
     } else {
       alert("Password reset failed. Please try again.");
-      console.log(data);
     }
   };
 

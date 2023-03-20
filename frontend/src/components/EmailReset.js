@@ -30,7 +30,7 @@ export const EmailReset = () => {
       if (response.ok) {
         alert("An email has been sent to reset your password.");
       } else {
-        alert("Failed to send reset password email.");
+        alert("Failed to send reset password email, make sure you email is registered with us.");
       }
     } catch (error) {
       console.error(error);

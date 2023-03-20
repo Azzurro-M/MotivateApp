@@ -74,11 +74,12 @@ const loginUser = asyncHandler(async (req, res) => {
 const getUser = asyncHandler(async (req, res) => {
   res.status(200).json(req.user);
 });
+
 const logOut = asyncHandler(async (req, res) => {
   const logoutToken = generateToken(id, "1s");
 });
 
-//FORGOT PASSWORD FUNCTOONALITY
+//FORGOT PASSWORD FUNCTIONALITY
 
 const forgotPassword = asyncHandler(async (req, res) => {
   //EMAIL FIELD TO REQUEST
@@ -88,7 +89,9 @@ const forgotPassword = asyncHandler(async (req, res) => {
   //IF EMAIL NOT FOUND
   if (!user) {
     res.status(404);
-    throw new Error("User not found");
+    throw new Error(
+      "Email not found, please make sure you have used correct email amd spelling. If you are new to motivate App please register your account."
+    );
   }
 
   //IF USER FOUND
@@ -96,21 +99,11 @@ const forgotPassword = asyncHandler(async (req, res) => {
   const resetToken = user.getResetPasswordToken();
   await user.save();
 
-  // const resetUrl = `${req.protocol}://${req.get(
-  //   "host"
-  // )}/api/user/resetpassword/${resetToken}`;
-
   //RESET LINK PLUS MESSAGE
-  const resetUrl = `http://localhost:3000/resetpassword/${resetToken}`;
+  const resetUrl = `${process.env.HOST}/resetpassword/${resetToken}`;
   const message = `You are receiving this email because you (or someone else) has requested the reset of a password. Clic on this link to reset your password: \n\n ${resetUrl}`;
 
   try {
-    //   await sendEmail({
-    //     email: user.email,
-    //     subject: "Password reset",
-    //     message,
-    //   });
-
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -144,7 +137,7 @@ const resetPassword = asyncHandler(async (req, res) => {
     .createHash("sha256")
     .update(req.params.resetToken)
     .digest("hex");
-  console.log(req.params.resetToken);
+
   const user = await User.findOne({
     resetPasswordToken,
     resetPasswordExpire: { $gt: Date.now() },

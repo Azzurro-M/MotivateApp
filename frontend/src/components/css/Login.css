@@ -28,7 +28,7 @@ h2 {
   color: whitesmoke;
 }
 
-input {
+.login-form input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -37,7 +37,7 @@ input {
   margin: 10px;
 }
 
-button {
+.login-form button {
   background-color: #4c9eaf;
   color: white;
   padding: 12px 20px;

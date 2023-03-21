@@ -19,6 +19,8 @@ h2 {
   padding: 50px;
   border-radius: 5px;
   align-content: center;
+  border: 1px solid white;
+  margin-top: 100px;
 }
 
 .login-form label {
@@ -57,8 +59,6 @@ h2 {
   .login-form {
     width: 100%;
     max-width: 400px;
-    margin: auto;
-    padding: 10px;
     border-radius: 5px;
     align-content: center;
   }
